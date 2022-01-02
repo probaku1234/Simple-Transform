@@ -26,6 +26,7 @@ EffectShader Property SuccubusTransFXS Auto
 EffectShader Property FireFXShader Auto
 EffectShader Property ShockPlayerCloakFXShader Auto
 Bool Property TransformTattoo Auto Hidden
+Bool Property DebugMode Auto Hidden
 HeadPart Property STQSuccubusEyes Auto
 HeadPart Property OriginalEyes Auto Hidden
 

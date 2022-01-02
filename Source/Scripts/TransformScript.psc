@@ -22,7 +22,10 @@ Function Transform(Actor akActor)
 EndFunction
 
 Function BecomeSuccu(Actor akActor)
-    Debug.Notification("Transform to Succubus")
+    If (STQ.DebugMode)
+        Debug.Notification("$ST_TRANSFORMSUCCMESSAGE")
+    EndIf
+    
     STQ.IsTransformed = True
     STQ.IsInTranform = True
 
@@ -81,7 +84,10 @@ Function BecomeSuccu(Actor akActor)
 EndFunction
 
 Function BecomeHuman(Actor akActor)
-    Debug.Notification("Transform to Human")
+    If (STQ.DebugMode)
+        Debug.Notification("$ST_TRANSFORMHumMESSAGE")
+    EndIf
+    
     STQ.IsInTranform = True
     STQ.IsTransformed = False
 

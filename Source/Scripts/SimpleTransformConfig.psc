@@ -28,7 +28,7 @@ Event OnPageReset(string page)
         UnloadCustomContent()
     EndIf
 
-    If Page == ("Static Page") 
+    If Page == ("Transform") 
         SetCursorFillMode(TOP_TO_BOTTOM)
         
         AddHeaderOption("Customize Transform Options")
@@ -49,6 +49,15 @@ Event OnPageReset(string page)
         AddKeyMapOptionST("HotkeySetOutfit", "Set Outfit", STQ.HotkeySetOutfit)
         AddKeyMapOptionST("HotkeyTransform", "Transform", STQ.HotkeyTransform)
     Endif
+
+    If (Page == "Debug")
+        SetCursorFillMode(TOP_TO_BOTTOM)
+
+        AddHeaderOption("Debug")
+
+        AddToggleOptionST("DebugMode", "Enable Debug Mod", STQ.DebugMode)
+        ; code
+    EndIf
 EndEvent
 
 Event OnOptionHighlight(Int Option)
@@ -246,5 +255,8 @@ Event OnSelectST()
     ElseIf (Option == "TransformEyes")
         STQ.TransformEyes = !STQ.TransformEyes
         SetToggleOptionValueST(STQ.TransformEyes)
+    ElseIf (Option == "DebugMode")
+        STQ.DebugMode = !STQ.DebugMode
+        SetToggleOptionValueST(STQ.DebugMode)
     EndIf
 EndEvent
