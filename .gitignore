@@ -1,0 +1,11 @@
+.vscode
+Build
+Scripts/*.pex
+meshes
+textures
+SimpleTransform.esp
+SkyrimSE.code-workspace
+skyrimse.ppj
+meta.ini
+interface
+sound
