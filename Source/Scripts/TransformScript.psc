@@ -87,6 +87,15 @@ Function BecomeSuccu(Actor akActor)
     EndIf
 
     ; NiOverride.AddNodeOverrideInt(akActor, True, "Body [Ovl1]", 7, -1, BPGTintColorStart, True)
+    
+    If (STQ.EnableFuta)
+        Int handle = ModEvent.Create("GenderBender_SetActorGender")
+        If (handle)
+            ModEvent.PushForm(handle, akActor)
+	        ModEvent.PushInt(handle, 0)
+	        ModEvent.Send(handle)
+        EndIf    
+    EndIf
 
     STQ.IsInTranform = False
 EndFunction
@@ -143,6 +152,15 @@ Function BecomeHuman(Actor akActor)
         EndWhile
     EndIf
     OriginalOutfitChest.RemoveAllItems()
+
+    If (STQ.EnableFuta)
+        Int handle = ModEvent.Create("GenderBender_SetActorGender")
+        If (handle)
+            ModEvent.PushForm(handle, akActor)
+	        ModEvent.PushInt(handle, 1)
+	        ModEvent.Send(handle)
+        EndIf    
+    EndIf
 
     STQ.IsInTranform = False
     ; Debug.Notification("Body Overlay: " + NiOverride.GetNumBodyOverlays())

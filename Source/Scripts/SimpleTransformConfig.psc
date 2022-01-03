@@ -2,6 +2,7 @@ Scriptname SimpleTransformConfig  extends SKI_ConfigBase
 
 SimpleTransformQuestScript Property STQ Auto
 SimpleTransformOutfitSets Property STQOutfitSets Auto
+Bool Property GBChecked = False Auto Hidden
 
 GlobalVariable Property SliderA Auto
 GlobalVariable Property SliderB Auto
@@ -19,6 +20,13 @@ Int Function GetVersion()
     Return 1
 EndFunction
 
+Event OnConfigInit()
+    GBChecked = Game.GetModByName("GenderBender.esm") != 255
+EndEvent
+
+Event OnVersionUpdate(Int a_version)
+EndEvent
+
 Event OnPageReset(string page)
 
     If (Page == "") 
@@ -28,27 +36,39 @@ Event OnPageReset(string page)
         UnloadCustomContent()
     EndIf
 
-    If Page == ("Transform") 
+    If Page == ("Transform")
         SetCursorFillMode(TOP_TO_BOTTOM)
         
-        AddHeaderOption("Customize Transform Options")
+        If (STQ.IsTransformed)
+            AddHeaderOption("Setting Locked")
+            AddTextOptionST("QEEQWEQWE", "", "Lock MCM While Transformed", OPTION_FLAG_DISABLED)
+        Else
+            AddHeaderOption("Customize Transform Options")
         
-        AddColorOptionST("STQSkinColor", "Skin Color", STQ.STQSkinColor)
-        AddTextOptionST("SetSkinColor", "", "Use Current Skin Color")
-        AddColorOptionST("STQSuccubusHairColorInt", "Hair Color", STQ.STQSuccubusHairColorInt)
-        AddTextOptionST("SetHairColor", "", "Use Current Hair Color")
+            AddColorOptionST("STQSkinColor", "Skin Color", STQ.STQSkinColor)
+            AddTextOptionST("SetSkinColor", "", "Use Current Skin Color")
+            AddColorOptionST("STQSuccubusHairColorInt", "Hair Color", STQ.STQSuccubusHairColorInt)
+            AddTextOptionST("SetHairColor", "", "Use Current Hair Color")
 
-        AddToggleOptionST("TransformTattoo", "Enable Transform Tattoo", STQ.TransformTattoo)
-        AddMenuOptionST("STQTattooSlot", "Tattoo Slot", STQ.STQTattooSlot+1)
-        AddColorOptionST("STQTattooColor", "Tattoo Color", STQ.STQTattooColor)
-        AddTextOptionST("SetTattooColor", "", "Use Current Tattoo Color")
-        AddToggleOptionST("TransformEyes", "Enable Transform Eyes", STQ.TransformEyes)
-        AddToggleOptionST("EnableMaleTransform", "Enable Male Transform", STQ.EnableMaleTransform)
+            AddToggleOptionST("TransformTattoo", "Enable Transform Tattoo", STQ.TransformTattoo)
+            AddMenuOptionST("STQTattooSlot", "Tattoo Slot", STQ.STQTattooSlot+1)
+            AddColorOptionST("STQTattooColor", "Tattoo Color", STQ.STQTattooColor)
+            AddTextOptionST("SetTattooColor", "", "Use Current Tattoo Color")
+            AddToggleOptionST("TransformEyes", "Enable Transform Eyes", STQ.TransformEyes)
+            AddToggleOptionST("EnableMaleTransform", "Enable Male Transform", STQ.EnableMaleTransform)
 
-        SetCursorPosition(1)
-        AddHeaderOption("Hotkeys")
-        AddKeyMapOptionST("HotkeySetOutfit", "Set Outfit", STQ.HotkeySetOutfit)
-        AddKeyMapOptionST("HotkeyTransform", "Transform", STQ.HotkeyTransform)
+            AddHeaderOption("Futa")
+            If (GBChecked)
+                AddToggleOptionST("EnableFuta", "Enable Futa", STQ.EnableFuta)
+            ElseIf (true)
+                AddToggleOptionST("EnableFuta", "Gender Bender Not Detected", STQ.EnableFuta, OPTION_FLAG_DISABLED)
+            EndIf
+            
+            SetCursorPosition(1)
+            AddHeaderOption("Hotkeys")
+            AddKeyMapOptionST("HotkeySetOutfit", "Set Outfit", STQ.HotkeySetOutfit)
+            AddKeyMapOptionST("HotkeyTransform", "Transform", STQ.HotkeyTransform)   
+        EndIf
     Endif
 
     If (Page == "Debug")
@@ -165,6 +185,7 @@ State SetTattooColor
         SetInfoText("Set current tattoo color as transformed tattoo color.")
     EndEvent
 EndState
+
 ;Color Options
 Event OnColorOpenST()
     String Option = GetState()
@@ -231,9 +252,10 @@ State STQTattooSlot
     Event OnMenuOpenST()
         Int OverlayNum = NiOverride.GetNumBodyOverlays()
         String[] Options = New String[10]
+        Options[0] = 0
         Int Index = 0
         While (Index < OverlayNum)
-            Options[Index] = Index + 1
+            Options[Index+1] = Index + 1
             Index += 1
         EndWhile
         SetMenuDialogStartIndex(0)
@@ -264,5 +286,8 @@ Event OnSelectST()
         If (STQ.EnableMaleTransform)
             ShowMessage("Pikapika", False, "$Yes")
         EndIf
+    ElseIf (Option == "EnableFuta")
+        STQ.EnableFuta = !STQ.EnableFuta
+        SetToggleOptionValueST(STQ.EnableFuta)
     EndIf
 EndEvent

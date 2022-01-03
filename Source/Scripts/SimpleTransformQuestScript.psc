@@ -28,6 +28,7 @@ EffectShader Property ShockPlayerCloakFXShader Auto
 Bool Property TransformTattoo Auto Hidden
 Bool Property DebugMode Auto Hidden
 Bool Property EnableMaleTransform Auto Hidden
+Bool Property EnableFuta Auto Hidden
 HeadPart Property STQSuccubusEyes Auto
 HeadPart Property OriginalEyes Auto Hidden
 
@@ -72,6 +73,7 @@ Function STQReload()
     ReloadHotKeys()
 EndFunction
 
+; not working
 Int Function GetBodyPaintColor(Int Slot)
     Int Color = NiOverride.GetNodeOverrideInt(PlayerRef, True, "Body [Ovl" + Slot + "]", 8, -1)
     Return Color
