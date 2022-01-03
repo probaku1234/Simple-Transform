@@ -31,7 +31,7 @@ EndFunction
 
 Function BecomeSuccu(Actor akActor)
     If (STQ.DebugMode)
-        Debug.Notification("$ST_TRANSFORMSUCCMESSAGE")
+        Debug.Notification("Become Succubus")
     EndIf
     
     STQ.IsTransformed = True
@@ -62,6 +62,14 @@ Function BecomeSuccu(Actor akActor)
         akActor.ChangeHeadPart(STQ.STQSuccubusEyes)
     EndIf
 
+    ; Transform Tattoo
+    If (STQ.TransformTattoo)
+        STQ.OriginalTattooColor = STQ.GetBodyPaintColor(STQ.STQTattooSlot)
+        STQ.OriginalTattooAlpha = STQ.GetBodyPaintAlpha(STQ.STQTattooSlot)
+        NiOverride.AddNodeOverrideInt(akActor, True, "Body [Ovl" + STQ.STQTattooSlot + "]", 7, -1, STQ.STQTattooColor, True)
+        NiOverride.AddNodeOverrideFloat(akActor, True, "Body [Ovl" + STQ.STQTattooSlot + "]", 8, -1, STQ.STQTattooAlpha, True)
+    EndIf
+
     ; Transform Hair Color
     STQ.OriginalHairColor = akActor.GetLeveledActorBase().GetHairColor()
     ; STQ.STQSuccubusHairColor = akActor.GetLeveledActorBase().GetHairColor()
@@ -85,8 +93,6 @@ Function BecomeSuccu(Actor akActor)
             Index += 1
         EndWhile
     EndIf
-
-    ; NiOverride.AddNodeOverrideInt(akActor, True, "Body [Ovl1]", 7, -1, BPGTintColorStart, True)
     
     If (STQ.EnableFuta)
         Int handle = ModEvent.Create("GenderBender_SetActorGender")
@@ -102,7 +108,7 @@ EndFunction
 
 Function BecomeHuman(Actor akActor)
     If (STQ.DebugMode)
-        Debug.Notification("$ST_TRANSFORMHumMESSAGE")
+        Debug.Notification("Become Human")
     EndIf
     
     STQ.IsInTranform = True
@@ -115,8 +121,15 @@ Function BecomeHuman(Actor akActor)
     ; Transform Skin Color
     Game.SetTintMaskColor(STQ.OriginalSkinColor, 6, 0)
 
+    ; Transform Eyes
     If (STQ.OriginalEyes)
         akActor.ChangeHeadPart(STQ.OriginalEyes)
+    EndIf
+
+    ; Transform Tattoo
+    If (STQ.OriginalTattooColor)
+        NiOverride.AddNodeOverrideInt(akActor, True, "Body [Ovl" + STQ.STQTattooSlot + "]", 7, -1, STQ.OriginalTattooColor, True)
+        NiOverride.AddNodeOverrideFloat(akActor, True, "Body [Ovl" + STQ.STQTattooSlot + "]", 8, -1, STQ.OriginalTattooAlpha, True)
     EndIf
 
     ; Transform Hair Color

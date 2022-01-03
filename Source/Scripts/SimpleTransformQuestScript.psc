@@ -19,6 +19,9 @@ Int Property HotkeySetOutfit = 211 Auto Hidden
 Int Property HotkeyTransform = 221 Auto Hidden
 Int Property STQTattooSlot = 0 Auto Hidden
 Int Property STQTattooColor =  0x000000 Auto Hidden
+Int Property OriginalTattooColor Auto Hidden
+Float Property OriginalTattooAlpha Auto Hidden
+Float Property STQTattooAlpha = 255.0 Auto Hidden
 ColorForm Property OriginalHairColor Auto Hidden
 ColorForm Property STQSuccubusHairColor Auto 
 Sound Property SoundTransformMoan Auto
@@ -73,8 +76,18 @@ Function STQReload()
     ReloadHotKeys()
 EndFunction
 
-; not working
 Int Function GetBodyPaintColor(Int Slot)
-    Int Color = NiOverride.GetNodeOverrideInt(PlayerRef, True, "Body [Ovl" + Slot + "]", 8, -1)
+    Int Color = NiOverride.GetNodeOverrideInt(PlayerRef, True, "Body [Ovl" + Slot + "]", 7, -1)
+    If (DebugMode)
+        Debug.Notification("Tattoo Color: " + Color)
+    EndIf
     Return Color
+EndFunction
+
+Float Function GetBodyPaintAlpha(Int Slot)
+    Float Alpha = NiOverride.GetNodePropertyFloat(PlayerRef, True, "Body [Ovl" + Slot + "]", 8, -1)
+    If (DebugMode)
+        Debug.Notification("Tattoo Alpha: " + Alpha)
+    EndIf
+    Return Alpha 
 EndFunction

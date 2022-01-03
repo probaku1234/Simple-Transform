@@ -30,8 +30,8 @@ EndEvent
 Event OnPageReset(string page)
 
     If (Page == "") 
-        SetTitleText("$ST_TITLE")
-        LoadCustomContent("NWS/Pikachu2.dds", 0.0, 0.0)
+        SetTitleText("Simple Transform")
+        LoadCustomContent("ST/Pikachu2.dds", 0.0, 0.0)
     Else
         UnloadCustomContent()
     EndIf
@@ -179,6 +179,7 @@ EndState
 State SetTattooColor
     Event OnSelectST()
         STQ.STQTattooColor = STQ.GetBodyPaintColor(STQ.STQTattooSlot)
+        STQ.STQTattooAlpha = STQ.GetBodyPaintAlpha(STQ.STQTattooSlot)
         SetColorOptionValueST(STQ.STQTattooColor, False, "STQTattooColor")
     EndEvent
     Event OnHighlightST()
@@ -252,19 +253,19 @@ State STQTattooSlot
     Event OnMenuOpenST()
         Int OverlayNum = NiOverride.GetNumBodyOverlays()
         String[] Options = New String[10]
-        Options[0] = 0
+        
         Int Index = 0
         While (Index < OverlayNum)
-            Options[Index+1] = Index + 1
+            Options[Index] = Index + 1
             Index += 1
         EndWhile
-        SetMenuDialogStartIndex(0)
+        SetMenuDialogStartIndex(STQ.STQTattooSlot)
         SetMenuDialogDefaultIndex(0)
         SetMenuDialogOptions(Options)
     EndEvent
     Event OnMenuAcceptST(Int I)
         STQ.STQTattooSlot = I
-        SetMenuOptionValueST(STQ.STQTattooSlot + 1)
+        SetMenuOptionValueST(I + 1)
     EndEvent
 EndState
 
