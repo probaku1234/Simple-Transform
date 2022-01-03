@@ -14,6 +14,14 @@ Event OnEffectStart(Actor akTarget, Actor akCaster)
 EndEvent
 
 Function Transform(Actor akActor)
+    If (akActor.IsOnMount())
+        Debug.Notification("No Transform While on Mount")
+        Return
+    EndIf
+    If (!STQ.EnableMaleTransform && akActor.GetLeveledActorBase().GetSex() != 1)
+        Debug.Notification("Male Transform Not Enabled")
+        Return
+    EndIf
     If STQ.IsTransformed
         BecomeHuman(akActor)
     Else

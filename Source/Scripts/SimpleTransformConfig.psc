@@ -43,6 +43,7 @@ Event OnPageReset(string page)
         AddColorOptionST("STQTattooColor", "Tattoo Color", STQ.STQTattooColor)
         AddTextOptionST("SetTattooColor", "", "Use Current Tattoo Color")
         AddToggleOptionST("TransformEyes", "Enable Transform Eyes", STQ.TransformEyes)
+        AddToggleOptionST("EnableMaleTransform", "Enable Male Transform", STQ.EnableMaleTransform)
 
         SetCursorPosition(1)
         AddHeaderOption("Hotkeys")
@@ -56,7 +57,6 @@ Event OnPageReset(string page)
         AddHeaderOption("Debug")
 
         AddToggleOptionST("DebugMode", "Enable Debug Mod", STQ.DebugMode)
-        ; code
     EndIf
 EndEvent
 
@@ -258,5 +258,11 @@ Event OnSelectST()
     ElseIf (Option == "DebugMode")
         STQ.DebugMode = !STQ.DebugMode
         SetToggleOptionValueST(STQ.DebugMode)
+    ElseIf (Option == "EnableMaleTransform")
+        STQ.EnableMaleTransform = !STQ.EnableMaleTransform
+        SetToggleOptionValueST(STQ.EnableMaleTransform)
+        If (STQ.EnableMaleTransform)
+            ShowMessage("Pikapika", False, "$Yes")
+        EndIf
     EndIf
 EndEvent

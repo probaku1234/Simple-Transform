@@ -27,6 +27,7 @@ EffectShader Property FireFXShader Auto
 EffectShader Property ShockPlayerCloakFXShader Auto
 Bool Property TransformTattoo Auto Hidden
 Bool Property DebugMode Auto Hidden
+Bool Property EnableMaleTransform Auto Hidden
 HeadPart Property STQSuccubusEyes Auto
 HeadPart Property OriginalEyes Auto Hidden
 

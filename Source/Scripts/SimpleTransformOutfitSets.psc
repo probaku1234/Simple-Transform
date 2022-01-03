@@ -13,6 +13,9 @@ Event OnMenuClose(String MenuName)
 EndEvent
 
 Function CreateOutfit(Actor akActor)
+    If (Utility.IsInMenuMode())
+        Return
+    EndIf
     Debug.Trace("Open Outfit Menu", 0)
     Debug.Trace(STQOutfitChestList.GetSize(), 0)
     ObjectReference OutfitChest = STQOutfitChestList.GetAt(2) as ObjectReference
