@@ -19,9 +19,13 @@ Int Property HotkeySetOutfit = 211 Auto Hidden
 Int Property HotkeyTransform = 221 Auto Hidden
 Int Property STQTattooSlot = 0 Auto Hidden
 Int Property STQTattooColor =  0x000000 Auto Hidden
+Int Property STQTattooGlowColor = 0x000000 Auto Hidden
 Int Property OriginalTattooColor Auto Hidden
+Int Property OriginalTattooGlowColor Auto Hidden
 Float Property OriginalTattooAlpha Auto Hidden
+Float Property OriginalTattooGlowAlpha Auto Hidden
 Float Property STQTattooAlpha = 255.0 Auto Hidden
+Float Property STQTattooGlowAlpha = 255.0 Auto Hidden
 ColorForm Property OriginalHairColor Auto Hidden
 ColorForm Property STQSuccubusHairColor Auto 
 Sound Property SoundTransformMoan Auto
@@ -52,7 +56,12 @@ EndEvent
 
 Event OnKeyDown(Int KeyCode)
     If (KeyCode == HotkeySetOutfit)
-        STQOutfitSets.CreateOutfit(PlayerRef)
+        If (IsTransformed)
+            Debug.Notification("qweqweasd")
+        Else
+            STQOutfitSets.CreateOutfit(PlayerRef)
+        EndIf
+        
     EndIf
 
     If (KeyCode == HotkeyTransform)
@@ -84,10 +93,26 @@ Int Function GetBodyPaintColor(Int Slot)
     Return Color
 EndFunction
 
+Int Function GetBodyPaintGlowColor(Int Slot)
+    Int Color = NiOverride.GetNodeOverrideInt(PlayerRef, True, "Body [Ovl" + Slot + "]", 0, -1)
+    If (DebugMode)
+        Debug.Notification("Tattoo Glow Color: " + Color)
+    EndIf
+    Return Color
+EndFunction
+
 Float Function GetBodyPaintAlpha(Int Slot)
     Float Alpha = NiOverride.GetNodePropertyFloat(PlayerRef, True, "Body [Ovl" + Slot + "]", 8, -1)
     If (DebugMode)
         Debug.Notification("Tattoo Alpha: " + Alpha)
     EndIf
     Return Alpha 
+EndFunction
+
+Float Function GetBodyPaintGlowAlpha(Int Slot)
+    Float Alpha = NiOverride.GetNodePropertyFloat(PlayerRef, True, "Body [Ovl" + Slot + "]", 1, -1)
+    If (DebugMode)
+        Debug.Notification("Tattoo Glow Alpha: " + Alpha)
+    EndIf
+    Return Alpha
 EndFunction

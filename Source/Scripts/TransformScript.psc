@@ -66,8 +66,13 @@ Function BecomeSuccu(Actor akActor)
     If (STQ.TransformTattoo)
         STQ.OriginalTattooColor = STQ.GetBodyPaintColor(STQ.STQTattooSlot)
         STQ.OriginalTattooAlpha = STQ.GetBodyPaintAlpha(STQ.STQTattooSlot)
+        STQ.OriginalTattooGlowColor = STQ.GetBodyPaintGlowColor(STQ.STQTattooSlot)
+        STQ.OriginalTattooGlowAlpha = STQ.GetBodyPaintGlowAlpha(STQ.STQTattooSlot)
+
         NiOverride.AddNodeOverrideInt(akActor, True, "Body [Ovl" + STQ.STQTattooSlot + "]", 7, -1, STQ.STQTattooColor, True)
         NiOverride.AddNodeOverrideFloat(akActor, True, "Body [Ovl" + STQ.STQTattooSlot + "]", 8, -1, STQ.STQTattooAlpha, True)
+        NiOverride.AddNodeOverrideInt(akActor, True, "Body [Ovl" + STQ.STQTattooSlot + "]", 0, -1, STQ.STQTattooGlowColor, True)
+        NiOverride.AddNodeOverrideFloat(akActor, True, "Body [Ovl" + STQ.STQTattooSlot + "]", 1, -1, STQ.STQTattooGlowAlpha, True)
     EndIf
 
     ; Transform Hair Color
@@ -130,6 +135,8 @@ Function BecomeHuman(Actor akActor)
     If (STQ.OriginalTattooColor)
         NiOverride.AddNodeOverrideInt(akActor, True, "Body [Ovl" + STQ.STQTattooSlot + "]", 7, -1, STQ.OriginalTattooColor, True)
         NiOverride.AddNodeOverrideFloat(akActor, True, "Body [Ovl" + STQ.STQTattooSlot + "]", 8, -1, STQ.OriginalTattooAlpha, True)
+        NiOverride.AddNodeOverrideInt(akActor, True, "Body [Ovl" + STQ.STQTattooSlot + "]", 0, -1, STQ.OriginalTattooGlowColor, True)
+        NiOverride.AddNodeOverrideFloat(akActor, True, "Body [Ovl" + STQ.STQTattooSlot + "]", 1, -1, STQ.OriginalTattooGlowAlpha, True)
     EndIf
 
     ; Transform Hair Color

@@ -31,7 +31,7 @@ Event OnPageReset(string page)
 
     If (Page == "") 
         SetTitleText("Simple Transform")
-        LoadCustomContent("ST/Pikachu2.dds", 0.0, 0.0)
+        LoadCustomContent("ST/Pikachu1.dds", 0.0, 0.0)
     Else
         UnloadCustomContent()
     EndIf
@@ -53,6 +53,7 @@ Event OnPageReset(string page)
             AddToggleOptionST("TransformTattoo", "Enable Transform Tattoo", STQ.TransformTattoo)
             AddMenuOptionST("STQTattooSlot", "Tattoo Slot", STQ.STQTattooSlot+1)
             AddColorOptionST("STQTattooColor", "Tattoo Color", STQ.STQTattooColor)
+            AddColorOptionST("STQTattooGlowColor", "Tattoo Glow Color", STQ.STQTattooGlowColor)
             AddTextOptionST("SetTattooColor", "", "Use Current Tattoo Color")
             AddToggleOptionST("TransformEyes", "Enable Transform Eyes", STQ.TransformEyes)
             AddToggleOptionST("EnableMaleTransform", "Enable Male Transform", STQ.EnableMaleTransform)
@@ -77,6 +78,7 @@ Event OnPageReset(string page)
         AddHeaderOption("Debug")
 
         AddToggleOptionST("DebugMode", "Enable Debug Mod", STQ.DebugMode)
+        AddTextOptionST("TEST", "$ST_TEST", OPTION_FLAG_DISABLED)
     EndIf
 EndEvent
 
@@ -180,7 +182,10 @@ State SetTattooColor
     Event OnSelectST()
         STQ.STQTattooColor = STQ.GetBodyPaintColor(STQ.STQTattooSlot)
         STQ.STQTattooAlpha = STQ.GetBodyPaintAlpha(STQ.STQTattooSlot)
+        STQ.STQTattooGlowColor = STQ.GetBodyPaintGlowColor(STQ.STQTattooSlot)
+        STQ.STQTattooGlowAlpha = STQ.GetBodyPaintGlowAlpha(STQ.STQTattooSlot)
         SetColorOptionValueST(STQ.STQTattooColor, False, "STQTattooColor")
+        SetColorOptionValueST(STQ.STQTattooGlowColor, False, "STQTattooGlowColor")
     EndEvent
     Event OnHighlightST()
         SetInfoText("Set current tattoo color as transformed tattoo color.")
@@ -199,6 +204,9 @@ Event OnColorOpenST()
     ElseIf Option == "STQTattooColor"
         SetColorDialogStartColor(STQ.STQTattooColor)
         SetColorDialogDefaultColor(STQ.STQTattooColor)
+    ElseIf Option == "STQTattooGlowColor"
+        SetColorDialogStartColor(STQ.STQTattooGlowColor)
+        SetColorDialogDefaultColor(STQ.STQTattooGlowColor)
     EndIf
 EndEvent
 
@@ -213,6 +221,9 @@ Event OnColorAcceptST(Int Color)
         SetColorOptionValueST(Color)
     ElseIf Option == "STQTattooColor"
         STQ.STQTattooColor = Color
+        SetColorOptionValueST(Color)
+    ElseIf Option == "STQTattooGlowColor"
+        STQ.STQTattooGlowColor = Color
         SetColorOptionValueST(Color)
     EndIf
 EndEvent
